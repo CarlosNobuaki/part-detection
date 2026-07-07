@@ -149,10 +149,13 @@ with col1:
 
 with col2:
     st.metric("Área da máscara", f"{rec['area_frac']:.1%}")
+    _old = (rec["name"], rec["accepted"])
     rec["name"] = st.text_input("Nome da peça principal", value=rec["name"],
                                 key=f"name_{folder}_{ss.idx}")
     rec["accepted"] = st.checkbox("Aceitar esta segmentação", value=rec["accepted"],
                                   key=f"acc_{folder}_{ss.idx}")
+    if (rec["name"], rec["accepted"]) != _old:
+        persist(folder)                       # auto-salva edições de nome/aceite
     c1, c2, c3 = st.columns(3)
     if c1.button("◀ Anterior") and ss.idx > 0:
         ss.idx -= 1; st.rerun()
@@ -171,7 +174,8 @@ st.write("Gera dataset YOLO-seg com **todas as pastas já revisadas** e treina o
 
 if st.button("📦 Exportar dataset YOLO-seg"):
     for f in list_folders():
-        load_records(f)
+        if f not in ss.records:           # não sobrescrever edições da sessão atual
+            load_records(f)
     all_names, name_to_id = [], {}
     records_out = []
     for f, rs in ss.records.items():
