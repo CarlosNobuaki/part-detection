@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+# pesos de modelos (baixados sob demanda)
+*.pt
+# dataset gerado e runs de treino
+data/
+runs/
+# dados brutos: ~5GB de fotos. Não versionar (use git-lfs se realmente precisar).
+images/

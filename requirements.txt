@@ -1,0 +1,5 @@
+# Identificador de peças — SAM3 (rotulagem) + YOLO26-seg (treino/inferência)
+# venv: Python 3.11  ->  python3.11 -m venv .venv
+ultralytics                    # traz torch, torchvision, opencv, numpy; inclui SAM e YOLO26
+streamlit                      # painel de segmentação + revisão
+streamlit-image-coordinates    # clique-para-apontar na revisão
