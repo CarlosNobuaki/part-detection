@@ -24,7 +24,7 @@ DATASET = ROOT / "data" / "dataset"
 for d in (PREVIEWS, RECORDS, DATASET):
     d.mkdir(parents=True, exist_ok=True)
 
-st.set_page_config(page_title="Identificador de peças", layout="wide")
+st.set_page_config(page_title="Segmentador de peças", layout="wide")
 ss = st.session_state
 ss.setdefault("records", {})   # folder -> [record]
 ss.setdefault("idx", 0)
@@ -131,7 +131,7 @@ rec = recs[ss.idx]
 
 col1, col2 = st.columns([3, 2])
 with col1:
-    st.caption("👆 Clique sobre a peça para re-segmentar naquele ponto (ou use ↻).")
+    st.caption("Clique sobre a peça para re-segmentar naquele ponto (ou use ↻).")
     if rec["preview"] and Path(rec["preview"]).exists():
         if not rec["accepted"] and rec["polygon"] is None:
             st.warning("Sem máscara (falhou). Clique na peça para apontar ou rejeite.")
@@ -172,7 +172,7 @@ st.divider()
 st.header("2 · Exportar dataset + treinar")
 st.write("Gera dataset YOLO-seg com **todas as pastas já revisadas** e treina o modelo.")
 
-if st.button("📦 Exportar dataset YOLO-seg"):
+if st.button("Exportar dataset YOLO-seg"):
     for f in list_folders():
         if f not in ss.records:           # não sobrescrever edições da sessão atual
             load_records(f)
@@ -195,7 +195,7 @@ if st.button("📦 Exportar dataset YOLO-seg"):
 
 epochs = st.number_input("Épocas", 1, 500, 100)
 model_name = st.selectbox("Modelo", ["yolo26n-seg.pt", "yolo26s-seg.pt"])
-if st.button("🚀 Treinar YOLO26-seg"):
+if st.button("Treinar YOLO26-seg"):
     data_yaml = ss.get("data_yaml") or str(DATASET / "data.yaml")
     if not Path(data_yaml).exists():
         st.error("Exporte o dataset primeiro.")
